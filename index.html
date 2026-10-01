@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#060b18" />
+
+    <title>Mutahhir | Full Stack Web Developer</title>
+    <meta name="description" content="Portfolio of Mohammad Mutahhir, a Full Stack Web Developer specializing in React, ASP.NET Core, C#, REST APIs, SQL Server, MySQL and modern web applications." />
+    <meta name="author" content="Mohammad Mutahhir" />
+    <link rel="canonical" href="/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Mohammad Mutahhir" />
+    <meta property="og:title" content="Mohammad Mutahhir | Full Stack Web Developer" />
+    <meta property="og:description" content="Building Digital Experiences That Feel Alive. React, ASP.NET Core, SQL Server, real-time apps and mobile." />
+    <meta property="og:image" content="/og-image.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Mohammad Mutahhir| Full Stack Web Developer" />
+    <meta name="twitter:description" content="Building Digital Experiences That Feel Alive. React, ASP.NET Core, SQL Server, real-time apps and mobile." />
+    <meta name="twitter:image" content="/og-image.png" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Mohammad Mutahhir",
+        "jobTitle": "Full Stack Web Developer",
+        "url": "/",
+        "sameAs": ["https://github.com/mutahhirayaan", 'https://www.linkedin.com/in/mohammad-mutahhir-53887224b/'],
+        "knowsAbout": ["React", "ASP.NET Core", "C#", "REST APIs", "SQL Server", "MySQL", "SignalR"]
+      }
+    </script>
+
+    <script>
+      // Apply the saved theme before first paint (prevents a light/dark flash).
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          if (t !== 'light' && t !== 'dark') t = 'dark';
+          var r = document.documentElement;
+          r.classList.toggle('dark', t === 'dark');
+          r.style.colorScheme = t;
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>This portfolio needs JavaScript enabled to render.</noscript>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

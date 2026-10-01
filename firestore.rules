@@ -1,0 +1,58 @@
+rules_version = '2';
+
+// Paste this whole file in: Firebase Console -> Firestore Database -> Rules -> Publish.
+// IMPORTANT: change the email below if your admin Google account is different.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email_verified == true
+        && request.auth.token.email == 'mutahhirayaan@gmail.com';
+    }
+
+    // Contact form: anyone can create a well-formed message; only the admin can read/delete.
+    match /messages/{id} {
+      allow create: if request.resource.data.keys().hasOnly(['name', 'email', 'subject', 'message', 'createdAt'])
+        && request.resource.data.name is string
+        && request.resource.data.name.size() >= 2 && request.resource.data.name.size() <= 100
+        && request.resource.data.email is string
+        && request.resource.data.email.size() <= 200
+        && request.resource.data.email.matches('^[^@ ]+@[^@ ]+[.][^@ ]+$')
+        && request.resource.data.subject is string && request.resource.data.subject.size() <= 200
+        && request.resource.data.message is string
+        && request.resource.data.message.size() >= 10 && request.resource.data.message.size() <= 1000
+        && request.resource.data.createdAt == request.time;
+      allow read, delete: if isAdmin();
+      allow update: if false;
+    }
+
+    // Site visitor counter (stats/site): public read, +1 only.
+    match /stats/{docId} {
+      allow read: if true;
+      allow create: if docId == 'site'
+        && request.resource.data.keys().hasOnly(['views'])
+        && request.resource.data.views == 1;
+      allow update: if docId == 'site'
+        && request.resource.data.keys().hasOnly(['views'])
+        && request.resource.data.views == resource.data.views + 1;
+      allow write: if isAdmin();
+    }
+
+    // Per-project views (projectViews/<slug>): admin read, public +1 only.
+    match /projectViews/{slug} {
+      allow read: if isAdmin();
+      allow create: if slug.matches('^[a-z0-9-]{1,60}$')
+        && request.resource.data.keys().hasOnly(['views'])
+        && request.resource.data.views == 1;
+      allow update: if request.resource.data.keys().hasOnly(['views'])
+        && request.resource.data.views == resource.data.views + 1;
+      allow write: if isAdmin();
+    }
+
+    // Everything else is locked.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
