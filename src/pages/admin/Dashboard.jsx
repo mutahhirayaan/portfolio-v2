@@ -35,15 +35,15 @@ const ago = (d) => {
 
 function Panel({ children, sx }) {
   return (
-    <Box sx={{ borderRadius: 5, p: 2.5, border: 1, borderColor: 'divider', bgcolor: 'background.paper', ...sx }}>{children}</Box>
+    <Box sx={{ borderRadius: 1, p: 2.5, border: 1, borderColor: 'divider', bgcolor: 'background.paper', ...sx }}>{children}</Box>
   );
 }
 
 function Stat({ label, value, icon: Icon, accent }) {
   return (
     <Panel sx={{ flex: '1 1 170px', position: 'relative', overflow: 'hidden' }}>
-      <Box sx={{ position: 'absolute', right: -24, top: -24, width: 96, height: 96, borderRadius: '50%', background: accent, opacity: 0.18, filter: 'blur(6px)' }} />
-      <Box sx={{ width: 38, height: 38, borderRadius: 3, display: 'grid', placeItems: 'center', background: accent, color: '#fff', mb: 1.5 }}><Icon size={18} /></Box>
+      <Box sx={{ position: 'absolute', right: -24, top: -24, width: 96, height: 96, borderRadius: 0, transform: 'rotate(20deg)', background: accent, opacity: 0.18, filter: 'blur(6px)' }} />
+      <Box sx={{ width: 38, height: 38, borderRadius: 1, display: 'grid', placeItems: 'center', background: accent, color: '#fff', mb: 1.5 }}><Icon size={18} /></Box>
       <Typography variant="h4" fontWeight={800} sx={{ lineHeight: 1 }}>{value ?? '–'}</Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>{label}</Typography>
     </Panel>
@@ -53,7 +53,7 @@ function Stat({ label, value, icon: Icon, accent }) {
 function Empty({ icon: Icon, title, hint, action }) {
   return (
     <Panel sx={{ textAlign: 'center', py: 8 }}>
-      <Box sx={{ width: 56, height: 56, borderRadius: 4, mx: 'auto', mb: 2, display: 'grid', placeItems: 'center', bgcolor: 'action.hover', color: 'primary.main' }}><Icon size={26} /></Box>
+      <Box sx={{ width: 56, height: 56, borderRadius: 1, mx: 'auto', mb: 2, display: 'grid', placeItems: 'center', bgcolor: 'action.hover', color: 'primary.main' }}><Icon size={26} /></Box>
       <Typography fontWeight={800}>{title}</Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: action ? 2 : 0 }}>{hint}</Typography>
       {action}
@@ -65,7 +65,7 @@ function SearchBox({ value, onChange, placeholder }) {
   return (
     <TextField
       size="small" value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder}
-      InputProps={{ startAdornment: <InputAdornment position="start"><Search size={16} /></InputAdornment>, sx: { borderRadius: 99 } }}
+      InputProps={{ startAdornment: <InputAdornment position="start"><Search size={16} /></InputAdornment>, sx: { borderRadius: 1 } }}
       sx={{ minWidth: { xs: '100%', sm: 280 } }}
     />
   );
@@ -86,7 +86,8 @@ export default function Dashboard() {
       background: { default: dark ? '#060b18' : '#f4f8ff', paper: dark ? '#0c1428' : '#ffffff' },
       divider: dark ? 'rgba(148,163,184,.16)' : 'rgba(15,23,42,.10)',
     },
-    shape: { borderRadius: 14 },
+    shape: { borderRadius: 4 },
+    components: { MuiChip: { styleOverrides: { root: { borderRadius: 4 } } } },
     typography: { fontFamily: '"Manrope Variable", system-ui, sans-serif', button: { textTransform: 'none', fontWeight: 700 } },
   }), [mode, dark]);
 
@@ -166,10 +167,10 @@ export default function Dashboard() {
       }}>
         {/* Header */}
         <Box className="rise" sx={{
-          borderRadius: 6, p: { xs: 3, md: 4 }, mb: 3, color: '#fff', position: 'relative', overflow: 'hidden',
+          borderRadius: 1, p: { xs: 3, md: 4 }, mb: 3, color: '#fff', position: 'relative', overflow: 'hidden',
           background: 'linear-gradient(120deg,#0e7490 0%,#4f46e5 55%,#7c3aed 100%)',
         }}>
-          <Box sx={{ position: 'absolute', right: -60, bottom: -80, width: 260, height: 260, borderRadius: '50%', bgcolor: 'rgba(255,255,255,.12)' }} />
+          <Box sx={{ position: 'absolute', right: -60, bottom: -80, width: 260, height: 260, borderRadius: 0, transform: 'rotate(20deg)', bgcolor: 'rgba(255,255,255,.12)' }} />
           <Box sx={{ position: 'relative', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 2 }}>
             <Box>
               <Typography variant="h4" fontWeight={800}>{greeting()}, {firstName}</Typography>
@@ -185,13 +186,13 @@ export default function Dashboard() {
           </Box>
         </Box>
 
-        {!env.apiEnabled && env.firebase.enabled && <Alert severity="info" sx={{ mb: 3, borderRadius: 4 }}>Firebase mode: visitors, project views and contact messages are live. Projects and skills are edited in code (src/data).</Alert>}
-        {!env.apiEnabled && !env.firebase.enabled && <Alert severity="info" sx={{ mb: 3, borderRadius: 4 }}>No backend connected, so the dashboard is read-only and shows built-in data.</Alert>}
+        {!env.apiEnabled && env.firebase.enabled && <Alert severity="info" sx={{ mb: 3 }}>Firebase mode: visitors, project views and contact messages are live. Projects and skills are edited in code (src/data).</Alert>}
+        {!env.apiEnabled && !env.firebase.enabled && <Alert severity="info" sx={{ mb: 3 }}>No backend connected, so the dashboard is read-only and shows built-in data.</Alert>}
 
         <Box sx={{ display: 'flex', gap: 3, flexDirection: { xs: 'column', md: 'row' }, alignItems: 'flex-start' }}>
           {/* Navigation */}
           <Box component="nav" aria-label="Dashboard sections" sx={{
-            display: 'flex', flexDirection: { xs: 'row', md: 'column' }, gap: 0.5, p: 0.75, borderRadius: 5, border: 1, borderColor: 'divider', bgcolor: 'background.paper',
+            display: 'flex', flexDirection: { xs: 'row', md: 'column' }, gap: 0.5, p: 0.75, borderRadius: 1, border: 1, borderColor: 'divider', bgcolor: 'background.paper',
             width: { xs: '100%', md: 220 }, flexShrink: 0, overflowX: 'auto', position: { md: 'sticky' }, top: { md: 100 },
           }}>
             {NAV.map(({ label, icon: Icon }, i) => {
@@ -200,13 +201,13 @@ export default function Dashboard() {
               return (
                 <Button key={label} onClick={() => setTab(i)} startIcon={<Icon size={17} />} aria-current={active ? 'page' : undefined}
                   sx={{
-                    justifyContent: 'flex-start', borderRadius: 4, px: 1.75, py: 1.1, whiteSpace: 'nowrap', flex: { xs: '0 0 auto', md: 'initial' },
+                    justifyContent: 'flex-start', borderRadius: 1, px: 1.75, py: 1.1, whiteSpace: 'nowrap', flex: { xs: '0 0 auto', md: 'initial' },
                     color: active ? '#fff' : 'text.secondary',
                     background: active ? 'linear-gradient(120deg,#0e7490,#7c3aed)' : 'transparent',
                     '&:hover': { background: active ? 'linear-gradient(120deg,#0e7490,#7c3aed)' : undefined, bgcolor: active ? undefined : 'action.hover' },
                   }}>
                   <Box sx={{ flex: 1, textAlign: 'left' }}>{label}</Box>
-                  {badge ? <Box component="span" sx={{ ml: 1.5, fontSize: 12, px: 0.9, borderRadius: 9, bgcolor: active ? 'rgba(255,255,255,.25)' : 'action.selected' }}>{badge}</Box> : null}
+                  {badge ? <Box component="span" sx={{ ml: 1.5, fontSize: 12, px: 0.9, borderRadius: 1, bgcolor: active ? 'rgba(255,255,255,.25)' : 'action.selected' }}>{badge}</Box> : null}
                 </Button>
               );
             })}
@@ -247,7 +248,7 @@ export default function Dashboard() {
                           <Typography fontWeight={800}>Visitor interest</Typography>
                           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>Project views per visitor</Typography>
                           <Typography variant="h3" fontWeight={800}>{engagement != null ? `${engagement}%` : '–'}</Typography>
-                          <LinearProgress variant="determinate" value={engagement ?? 0} sx={{ height: 8, borderRadius: 9, mt: 1.5 }} />
+                          <LinearProgress variant="determinate" value={engagement ?? 0} sx={{ height: 8, borderRadius: 1, mt: 1.5 }} />
                         </Panel>
                         <Panel>
                           <Typography fontWeight={800} sx={{ mb: 1.5 }}>Quick actions</Typography>
@@ -268,7 +269,7 @@ export default function Dashboard() {
                       <Button startIcon={<Plus size={16} />} variant="contained" onClick={() => setEdit({ ...empty })}>Create project</Button>
                     </Box>
                     <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-                      {categories.map((c) => <Chip key={c} label={c} clickable color={cat === c ? 'primary' : 'default'} variant={cat === c ? 'filled' : 'outlined'} onClick={() => setCat(c)} />)}
+                      {categories.map((c) => <Chip key={c} label={c} sx={{ borderRadius: 1 }} clickable color={cat === c ? 'primary' : 'default'} variant={cat === c ? 'filled' : 'outlined'} onClick={() => setCat(c)} />)}
                     </Box>
                     {projects.length === 0 ? (
                       <Empty icon={FolderKanban} title="No projects found" hint={q || cat !== 'All' ? 'Try a different search or category.' : 'Create your first project to show it on the site.'} />
@@ -371,7 +372,7 @@ export default function Dashboard() {
                     <Box component="label"
                       onDragOver={(e) => { e.preventDefault(); setDrag(true); }} onDragLeave={() => setDrag(false)}
                       onDrop={(e) => { e.preventDefault(); setDrag(false); pickResume(e.dataTransfer.files?.[0]); }}
-                      sx={{ display: 'grid', placeItems: 'center', gap: 1, py: 5, px: 2, textAlign: 'center', cursor: 'pointer', borderRadius: 5, border: '2px dashed', borderColor: drag ? 'primary.main' : 'divider', bgcolor: drag ? 'action.hover' : 'transparent', transition: 'all .2s', '&:focus-within': { borderColor: 'primary.main' } }}>
+                      sx={{ display: 'grid', placeItems: 'center', gap: 1, py: 5, px: 2, textAlign: 'center', cursor: 'pointer', borderRadius: 1, border: '2px dashed', borderColor: drag ? 'primary.main' : 'divider', bgcolor: drag ? 'action.hover' : 'transparent', transition: 'all .2s', '&:focus-within': { borderColor: 'primary.main' } }}>
                       <FileText size={30} />
                       <Typography fontWeight={700}>{resumeFile ? resumeFile.name : 'Drop a PDF here or click to choose'}</Typography>
                       {resumeFile && <Typography variant="caption" color="text.secondary">{(resumeFile.size / 1024).toFixed(0)} KB</Typography>}
@@ -386,7 +387,7 @@ export default function Dashboard() {
           </Box>
         </Box>
 
-        <Dialog open={Boolean(edit)} onClose={() => setEdit(null)} fullWidth maxWidth="sm" PaperProps={{ sx: { borderRadius: 5 } }}>
+        <Dialog open={Boolean(edit)} onClose={() => setEdit(null)} fullWidth maxWidth="sm" PaperProps={{ sx: { borderRadius: 1 } }}>
           <DialogTitle sx={{ fontWeight: 800 }}>{edit?._exists ? 'Edit project' : 'Create project'}</DialogTitle>
           <DialogContent sx={{ display: 'grid', gap: 2, pt: '8px !important' }}>
             {edit && ['title', 'slug', 'category', 'github', 'liveDemo', 'technologies'].map((k) => (
@@ -399,7 +400,7 @@ export default function Dashboard() {
                 <input hidden type="file" accept="image/*" onChange={(e) => upload(e.target.files?.[0])} />
               </Button>
             )}
-            {edit?.image && <Box component="img" src={edit.image} alt="Cover preview" sx={{ width: '100%', maxHeight: 180, objectFit: 'cover', borderRadius: 3 }} />}
+            {edit?.image && <Box component="img" src={edit.image} alt="Cover preview" sx={{ width: '100%', maxHeight: 180, objectFit: 'cover', borderRadius: 1 }} />}
           </DialogContent>
           <DialogActions sx={{ p: 2.5 }}>
             <Button onClick={() => setEdit(null)}>Cancel</Button>
